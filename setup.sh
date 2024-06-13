@@ -45,7 +45,7 @@ update_repository() {
 # Function to run the Ansible playbook
 run_playbook() {
     echo "Running the Ansible playbook..."
-    ansible-playbook -i localhost, -c local playbook.yml --extra-vars "network=${NETWORK} node_type=${NODE_TYPE}"
+    ansible-playbook -i localhost, -c local ansible/playbook.yml --extra-vars "network=${NETWORK} node_type=${NODE_TYPE}"
 }
 
 # Install necessary dependencies
