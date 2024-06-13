@@ -41,7 +41,7 @@ update_repository() {
 # Function to run the Ansible playbook
 run_playbook() {
     echo "Running the Ansible playbook..."
-    ansible-playbook -i localhost, -c local /opt/nimiq-ansible/playbook.yml --extra-vars "network=${NETWORK} node_type=${NODE_TYPE}"
+    ansible-playbook -i localhost, -c local /opt/nimiq-ansible/ansible/playbook.yml --extra-vars "network=${NETWORK} node_type=${NODE_TYPE}"
 }
 
 # Function to create symbolic link
