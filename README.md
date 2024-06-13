@@ -77,43 +77,6 @@ Sets up the Nimiq node based on the specified network and node type.
 
 Sets up monitoring tools like Promtail, Loki, Prometheus, and Grafana.
 
-## Repository Structure
-
-```
-ansible/
-├── playbook.yml
-├── roles/
-│   ├── common/
-│   │   ├── tasks/
-│   │   │   └── main.yml
-│   ├── docker/
-│   │   ├── tasks/
-│   │   │   └── main.yml
-│   ├── nimiq/
-│   │   ├── tasks/
-│   │   │   └── main.yml
-│   │   ├── templates/
-│   │   │   └── docker-compose.yml.j2
-│   │   │   └── config.toml.j2
-│   │   │   └── nginx.conf.j2
-│   └── monitoring/
-│       ├── tasks/
-│       │   └── main.yml
-│       ├── templates/
-│       │   └── promtail-config.yml.j2
-│       │   └── prometheus.yml.j2
-│       │   └── loki-config.yaml.j2
-│       │   └── docker-compose.yml.j2
-│       │   └── dashboards.yml
-│       │   └── datasource.yml
-│       │   └── dashboards/
-│       │       └── nimiq.json
-│       │       └── prometheus.json
-│       └── vars/
-│           └── main.yml
-├── setup.sh
-```
-
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any changes.
