@@ -42,4 +42,8 @@
     - 22
     - 80
     - 8443
-  notify: enable ufw
+
+- name: Allow everything and enable UFW
+  community.general.ufw:
+    state: enabled
+    policy: deny
