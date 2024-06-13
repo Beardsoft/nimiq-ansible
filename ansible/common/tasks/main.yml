@@ -1,0 +1,45 @@
+---
+- name: Check if running as root
+  ansible.builtin.fail:
+    msg: This playbook must be run as root.
+  when: ansible_user_id != 'root'
+
+- name: Ensure the system is Ubuntu
+  ansible.builtin.fail:
+    msg: This playbook is only compatible with Ubuntu.
+  when: ansible_distribution != 'Ubuntu'
+
+- name: Validate network parameter
+  ansible.builtin.fail:
+    msg: Invalid network parameter. Please use 'testnet'.
+  when: network != 'testnet'
+
+- name: Validate node_type parameter
+  ansible.builtin.fail:
+    msg: Invalid node_type parameter. Please use 'full_node', 'history_node' or 'validator'.
+  when: node_type not in ['full_node', 'history_node', 'validator']
+
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - jq
+    - libjq1
+    - libonig5
+    - git
+    - ufw
+    - fail2ban
+    - zip
+
+- name: Set up firewall rules
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  with_items:
+    - 22
+    - 80
+    - 8443
+  notify: enable ufw

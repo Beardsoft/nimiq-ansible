@@ -1,0 +1,51 @@
+---
+- name: Ensure directories exist
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - { path: /opt/monitoring }
+    - { path: /opt/monitoring/provisioning }
+    - { path: /opt/monitoring/provisioning/dashboards }
+
+- name: Template configuration files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - { src: "promtail-config.yml.j2", dest: "/opt/monitoring/promtail-config.yml" }
+    - { src: "prometheus.yml.j2", dest: "/opt/monitoring/prometheus.yml" }
+    - { src: "loki-config.yaml.j2", dest: "/opt/monitoring/loki-config.yaml" }
+    - { src: "docker-compose.yml.j2", dest: "/opt/monitoring/docker-compose.yml" }
+
+- name: Copy provisioning files
+  ansible.builtin.copy:
+    dest: /opt/monitoring/provisioning/
+    owner: root
+    group: root
+    mode: '0644'
+  with_items:
+    - { src: "dashboards.yml" }
+    - { src: "datasource.yml" }
+
+- name: Copy dashboard JSON files
+  ansible.builtin.copy:
+    dest: /opt/monitoring/provisioning/dashboards/
+    owner: root
+    group: root
+    mode: '0644'
+  with_items:
+    - { src: "dashboards/nimiq.json" }
+    - { src: "dashboards/prometheus.json" }
+
+- name: Deploy monitoring stack with Docker Compose
+  community.docker.docker_compose:
+    project_src: /opt/monitoring
+    state: present
+    restarted: true

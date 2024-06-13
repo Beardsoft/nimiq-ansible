@@ -1,0 +1,9 @@
+---
+repo_url: https://github.com/maestroi/nimiq-installer.git
+repo_dir: /opt/nimiq-installer
+gen_keys_docker_image: ghcr.io/maestroi/nimiq-key-generator:main
+version: "{{ version | default('master') }}"
+seed_nodes:
+  - /dns4/seed1.pos.nimiq-testnet.com/tcp/8443/wss
+network: test-albatross
+node_type: validator

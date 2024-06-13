@@ -1,0 +1,49 @@
+[network]
+peer_key_file = "peer_key.dat"
+listen_addresses = [
+    "/ip4/0.0.0.0/tcp/8443/ws",
+]
+
+seed_nodes = [
+    {% for seed in seed_nodes %}
+    { address = "{{ seed }}" }{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+desired_peer_count = 11
+
+[consensus]
+sync_mode = "{{ sync_mode }}"
+network = "{{ network }}"
+
+[zkp]
+prover_keys_path = "/home/nimiq/.zkp/"
+
+[rpc-server]
+bind = "0.0.0.0"
+port = 8648
+methods = []
+
+[metrics-server]
+bind = "0.0.0.0"
+port = 9200
+
+[database]
+
+[log]
+level = "info"
+timestamps = true
+
+[log.tags]
+libp2p_swarm = "info"
+
+[validator]
+validator_address = "{% if node_type == 'validator' %}{{ validator_address }}{% else %}NQ07 0000 0000 0000 0000 0000 0000 0000 0000{% endif %}"
+voting_key_file = "voting_key.dat"
+fee_key_file = "fee_key.dat"
+signing_key_file = "signing_key.dat"
+{% if node_type == 'validator' %}
+voting_key = "{{ voting_key }}"
+signing_key = "{{ signing_key }}"
+fee_key = "{{ fee_key }}"
+automatic_reactivate = true
+{% endif %}

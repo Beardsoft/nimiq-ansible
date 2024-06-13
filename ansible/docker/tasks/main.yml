@@ -1,0 +1,52 @@
+---
+- name: Install Docker dependencies
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ca-certificates
+    - curl
+
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+
+- name: Install Docker
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+
+- name: Ensure Docker group membership
+  ansible.builtin.user:
+    name: "{{ username }}"
+    groups: docker
+    append: true
+  when: "'docker' not in ansible_user_gid | map(attribute='name')"
+
+- name: Create the protocol group if not exists
+  ansible.builtin.group:
+    name: "{{ username }}"
+    gid: "{{ protocol_uid }}"
+    state: present
+    system: true
+
+- name: Create the protocol user if not exists
+  ansible.builtin.user:
+    name: "{{ username }}"
+    uid: "{{ protocol_uid }}"
+    group: "{{ protocol_uid }}"
+    shell: /usr/sbin/nologin
+    state: present
+    system: true

@@ -1,0 +1,122 @@
+version: "3"
+
+services:
+  node:
+    container_name: node
+    image: maestroi/nimiq-albatross:stable
+    user: "1001:1001"
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+      - "8648:8648"
+    environment:
+      RPC_ENABLED: "true"
+      NIMIQ_INSTANT_INBOUND: "true"
+    volumes:
+      - "./client.toml:/home/nimiq/.nimiq/client.toml"
+      - "data:/home/nimiq/.nimiq"
+    networks:
+      - app_net
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+    networks:
+      - app_net
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: always
+    command: --label-enable --interval 10800
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - app_net
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+{% if node_type == 'validator' %}
+  activate_validator:
+    container_name: activate_validator
+    image: ghcr.io/maestroi/nimiq-validator-activator-go:main
+    environment:
+      - NIMIQ_NODE_URL=http://node:8648
+      - PROMETHEUS_PORT=8000
+      - FAUCET_URL=https://faucet.pos.nimiq-testnet.com/tapit
+      - NIMIQ_NETWORK=testnet
+    volumes:
+      - "/opt/nimiq/validator/secrets:/keys"
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      - node
+    restart: unless-stopped
+    networks:
+      - app_net
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+{% endif %}
+  watchdog:
+    container_name: nimiq-watchdog
+    image: ghcr.io/maestroi/nimiq-watchdog:main
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes/validator_data/_data/:/data/
+    ports:
+      - 12345:12345
+    environment:
+      - NIMIQ_HOST=http://node
+      - NIMIQ_PORT=8648
+      - RETRY_LIMIT=60
+      - RETRY_DELAY=15
+      - RESTART_DELAY=600
+      - DOCKER_CONTAINER_NAME=node
+      - PROMETHEUS_PORT=12345
+      - CLEAN_LEDGER=True
+      - LEDGER_DIR=/data/
+      - NODE_TYPE=full
+    restart: unless-stopped
+    networks:
+      - app_net
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+volumes:
+  data:
+
+networks:
+  app_net:
+    external: true
