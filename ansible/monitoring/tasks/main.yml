@@ -1,15 +1,15 @@
 ---
 - name: Ensure directories exist
   ansible.builtin.file:
-    path: "{{ item.path }}"
+    path: "{{ item }}"
     state: directory
     owner: root
     group: root
     mode: '0644'
   loop:
-    - { path: /opt/monitoring }
-    - { path: /opt/monitoring/provisioning }
-    - { path: /opt/monitoring/provisioning/dashboards }
+    - /opt/monitoring
+    - /opt/monitoring/provisioning
+    - /opt/monitoring/provisioning/dashboards
 
 - name: Template configuration files
   ansible.builtin.template:
