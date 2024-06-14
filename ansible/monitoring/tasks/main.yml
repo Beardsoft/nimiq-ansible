@@ -26,23 +26,23 @@
 
 - name: Copy provisioning files
   ansible.builtin.copy:
-    dest: /opt/monitoring/provisioning/{{ item }}
+    dest: /opt/monitoring/provisioning/
     owner: root
     group: root
     mode: '0644'
   with_items:
-    - dashboards.yml"
-    - datasource.yml"
+    - { src: "dashboards.yml" }
+    - { src: "datasource.yml" }
 
 - name: Copy dashboard JSON files
   ansible.builtin.copy:
-    dest: /opt/monitoring/provisioning/dashboards/{{ item }}
+    dest: /opt/monitoring/provisioning/dashboards/
     owner: root
     group: root
     mode: '0644'
   with_items:
-    - "dashboards/nimiq.json"
-    - "dashboards/prometheus.json"
+    - { src: "dashboards/nimiq.json" }
+    - { src: "dashboards/prometheus.json" }
 
 - name: Deploy monitoring stack with Docker Compose
   community.docker.docker_compose_v2:
