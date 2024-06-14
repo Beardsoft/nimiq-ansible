@@ -50,3 +50,8 @@
     shell: /usr/sbin/nologin
     state: present
     system: true
+
+- name: Create app_net network
+  community.docker.docker_network:
+    name: app_net
+    attachable: true
