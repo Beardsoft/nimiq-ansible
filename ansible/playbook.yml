@@ -2,8 +2,10 @@
 - name: Nimiq V2 Installer with monitoring
   hosts: localhost
   become: true
+  vars:
+    monitor: true
   roles:
     - common
     - docker
     - nimiq
-    - { role: monitoring, when: monitor | default(true) }
+    - { role: monitoring, when: monitor }
