@@ -26,6 +26,7 @@
 
 - name: Copy provisioning files
   ansible.builtin.copy:
+    src: "{{ item.src }}"
     dest: /opt/monitoring/provisioning/
     owner: root
     group: root
@@ -36,6 +37,7 @@
 
 - name: Copy dashboard JSON files
   ansible.builtin.copy:
+    src: "{{ item.src }}"
     dest: /opt/monitoring/provisioning/dashboards/
     owner: root
     group: root
