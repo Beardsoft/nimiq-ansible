@@ -41,7 +41,7 @@
         owner: root
         group: root
         mode: '0644'
-      when: not lookup('file', '/opt/nimiq/validator/secrets/address.txt', errors='ignore')
+      when: not lookup('file', '/root/secrets.zip', errors='ignore')
 
     - name: Validator | Read keys for validator configuration
       ansible.builtin.set_fact:
