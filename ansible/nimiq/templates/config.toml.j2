@@ -13,7 +13,7 @@ desired_peer_count = 11
 
 [consensus]
 sync_mode = "{{ sync_mode }}"
-network = "{{ network }}"
+network = "{{ 'test-albatross' if network == 'testnet' else 'albatross' }}"
 
 [zkp]
 prover_keys_path = "/home/nimiq/.zkp/"
