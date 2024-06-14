@@ -9,6 +9,8 @@ set -e
 NETWORK=${1:-testnet}
 NODE_TYPE=${2:-validator}
 
+echo "Setting up Nimiq node for ${NETWORK} network..."
+
 # Function to install necessary dependencies
 install_dependencies() {
     echo "Updating OS packages..."
