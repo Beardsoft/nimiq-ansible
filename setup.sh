@@ -25,6 +25,12 @@ install_ansible() {
     apt-get install -y ansible > /dev/null
 }
 
+# Function to install Ansible Galaxy collection
+install_ansible_galaxy_collection() {
+    echo "Installing Ansible Galaxy collection for Docker..."
+    ansible-galaxy collection install community.docker > /dev/null
+}
+
 # Function to clone or update the Nimiq Ansible repository
 update_repository() {
     if [ -d "/opt/nimiq-ansible" ]; then
@@ -41,7 +47,7 @@ update_repository() {
 # Function to run the Ansible playbook
 run_playbook() {
     echo "Running the Ansible playbook..."
-    ansible-playbook -i localhost, -c local /opt/nimiq-ansible/ansible/playbook.yml --extra-vars "network=${NETWORK} node_type=${NODE_TYPE}"
+    ansible-playbook -i localhost, -c local /opt/nimiq-ansible/playbook.yml --extra-vars "network=${NETWORK} node_type=${NODE_TYPE}"
 }
 
 # Function to create symbolic link
@@ -59,6 +65,9 @@ install_dependencies
 if ! command -v ansible &> /dev/null; then
     install_ansible
 fi
+
+# Install Ansible Galaxy collection for Docker
+install_ansible_galaxy_collection
 
 # Clone or update the Nimiq Ansible repository
 update_repository

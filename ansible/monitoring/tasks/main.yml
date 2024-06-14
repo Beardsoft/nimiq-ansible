@@ -45,7 +45,7 @@
     - { src: "dashboards/prometheus.json" }
 
 - name: Deploy monitoring stack with Docker Compose
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /opt/monitoring
-    state: present
-    restarted: true
+    state: started
+    pull: true
