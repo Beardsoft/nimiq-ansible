@@ -1,5 +1,5 @@
 ---
-- name: Nimiq V2 Installer with Repository Cloning and Monitoring
+- name: Nimiq V2 Installer with monitoring
   hosts: localhost
   become: true
   roles:

@@ -45,10 +45,10 @@
 
     - name: Validator | Read keys for validator configuration
       ansible.builtin.set_fact:
-        validator_address: "{{ lookup('file', '/opt/nimiq/validator/secrets/address.txt') | regex_search('Address:[[:space:]]*(.*)', '\\1') }}"
-        fee_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/fee_key.txt') | regex_search('Private Key:[[:space:]]*(.*)', '\\1') }}"
-        signing_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/signing_key.txt') | regex_search('Private Key:[[:space:]]*(.*)', '\\1') }}"
-        voting_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/vote_key.txt') | regex_search('Secret Key:[[:space:]]*(.*)', '\\1') }}"
+        validator_address: "{{ lookup('file', '/opt/nimiq/validator/secrets/address.txt') | regex_search('Address:\\s*(.*)', '\\1') }}"
+        fee_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/fee_key.txt') | regex_search('Private Key:\\s*(.*)', '\\1') }}"
+        signing_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/signing_key.txt') | regex_search('Private Key:\\s*(.*)', '\\1') }}"
+        voting_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/vote_key.txt') | regex_search('Secret Key:\\s*(.*)', '\\1') }}"
 
 - name: Template configuration files
   ansible.builtin.template:
