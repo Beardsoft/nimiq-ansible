@@ -19,30 +19,30 @@
     group: root
     mode: '0644'
   loop:
-    - { src: "promtail-config.yml.j2", dest: "/opt/monitoring/promtail-config.yml" }
+    - { src: "promtail-config.yaml.j2", dest: "/opt/monitoring/promtail-config.yml" }
     - { src: "prometheus.yml.j2", dest: "/opt/monitoring/prometheus.yml" }
     - { src: "loki-config.yaml.j2", dest: "/opt/monitoring/loki-config.yaml" }
     - { src: "docker-compose.yml.j2", dest: "/opt/monitoring/docker-compose.yml" }
 
 - name: Copy provisioning files
   ansible.builtin.copy:
-    dest: /opt/monitoring/provisioning/
+    dest: /opt/monitoring/provisioning/{{ item }}
     owner: root
     group: root
     mode: '0644'
   with_items:
-    - { src: "dashboards.yml" }
-    - { src: "datasource.yml" }
+    - dashboards.yml"
+    - datasource.yml"
 
 - name: Copy dashboard JSON files
   ansible.builtin.copy:
-    dest: /opt/monitoring/provisioning/dashboards/
+    dest: /opt/monitoring/provisioning/dashboards/{{ item }}
     owner: root
     group: root
     mode: '0644'
   with_items:
-    - { src: "dashboards/nimiq.json" }
-    - { src: "dashboards/prometheus.json" }
+    - "dashboards/nimiq.json"
+    - "dashboards/prometheus.json"
 
 - name: Deploy monitoring stack with Docker Compose
   community.docker.docker_compose_v2:
