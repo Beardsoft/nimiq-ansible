@@ -33,7 +33,7 @@
     mode: '0644'
   with_items:
     - { src: "dashboards.yml" }
-    - { src: "datasource.yml" }
+    - { src: "datasources.yml" }
 
 - name: Copy dashboard JSON files
   ansible.builtin.copy:
