@@ -66,4 +66,4 @@
   community.docker.docker_compose_v2:
     project_src: /opt/nimiq/{{ node_type }}
     state: present
-    pull: true
+    pull: always
