@@ -1,12 +1,12 @@
 ---
 - name: Ensure node working directory exists
   ansible.builtin.file:
-    path: {{ item }}
+    path: "{{ item }}"
     state: directory
     owner: root
     group: root
     mode: '0755'
-  with_items:
+  loop:
     - "/opt/nimiq/{{ node_type }}"
     - "{{ ledger_location }}"
 
