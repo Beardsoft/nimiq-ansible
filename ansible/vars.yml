@@ -15,7 +15,7 @@ ledger_base: /opt/nimiq
 protocol_node:
   image: ghcr.io/nimiq/core-rs-albatross:v0.22.0
   sync_mode: "{{ 'history' if node_type == 'history_node' else 'full' }}"
-  ledger_location: "{{ ledger_base }}/{{ node_type }}/ledger"
+  ledger_location: "{{ ledger_base }}/ledger"
   rpc_port: 8648
   metrics_port: 9200
   P2P_port: 8443

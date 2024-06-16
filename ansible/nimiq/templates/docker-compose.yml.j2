@@ -13,8 +13,15 @@ services:
       RPC_ENABLED: "true"
       NIMIQ_INSTANT_INBOUND: "true"
     volumes:
-      - "./client.toml:/home/nimiq/.nimiq/client.toml"
-      - "{{ protocol_node.ledger_location }}:/home/nimiq/.nimiq"
+    volumes:
+      - type: bind
+        source: /opt/nimiq/{{ node_type }}/client.toml
+        target: /home/nimiq/.nimiq/client.toml
+        read_only: false
+      - type: bind
+        source: "{{ protocol_node.ledger_location }}"
+        target: /home/nimiq/.nimiq/testalbatross-{{ protocol_node.sync_mode }}-consensus
+        read_only: false
     networks:
       - app_net
     logging:
