@@ -7,8 +7,8 @@
     group: root
     mode: '0755'
   with_items:
-    - /opt/nimiq/{{ node_type }}
-    - {{ ledger_location }}
+    - "/opt/nimiq/{{ node_type }}"
+    - "{{ ledger_location }}"
 
 - name: Validator | Configuration
   when: node_type == "validator"
