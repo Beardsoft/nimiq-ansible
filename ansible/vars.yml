@@ -2,7 +2,7 @@
 ## Typical variables that will change by user.
 network: "{{ network | default('testnet') }}"
 node_type: "{{ node_type | default('validator') }}"
-monitor: "{{ monitor | default(true) }}"
+monitor_switch: "{{ monitor | default(true) }}"
 
 ## Rest of all variables to easily keep track an change if needed.
 gen_keys_docker_image: ghcr.io/maestroi/nimiq-key-generator:main
