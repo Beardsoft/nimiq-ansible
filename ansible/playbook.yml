@@ -2,8 +2,22 @@
 - name: Nimiq V2 Installer with monitoring
   hosts: localhost
   become: true
-  roles:
-    - common
-    - docker
-    - nimiq
-    - monitoring
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Import common role
+      ansible.builtin.import_role:
+        name: common
+
+    - name: Import docker role
+      ansible.builtin.import_role:
+        name: docker
+
+    - name: Import nimiq role
+      ansible.builtin.import_role:
+        name: nimiq
+
+    - name: Import monitoring role if monitor is true
+      ansible.builtin.import_role:
+        name: monitoring
+      when: monitor

@@ -3,18 +3,18 @@ version: "3"
 services:
   node:
     container_name: node
-    image: ghcr.io/nimiq/core-rs-albatross:v0.22.0
+    image: {{ protocol_node.image }}
     user: "1001:1001"
     restart: unless-stopped
     ports:
-      - "8443:8443"
-      - "8648:8648"
+      - "{{ protocol_node.P2P_port }}:{{ protocol_node.P2P_port }}"
+      - "{{ protocol_node.rpc_port }}:{{ protocol_node.rpc_port }}"
     environment:
       RPC_ENABLED: "true"
       NIMIQ_INSTANT_INBOUND: "true"
     volumes:
       - "./client.toml:/home/nimiq/.nimiq/client.toml"
-      - "data:/home/nimiq/.nimiq"
+      - "{{ protocol_node.ledger_location }}:/home/nimiq/.nimiq"
     networks:
       - app_net
     logging:
@@ -61,16 +61,16 @@ services:
 {% if node_type == 'validator' %}
   activate_validator:
     container_name: activate_validator
-    image: ghcr.io/maestroi/nimiq-validator-activator-go:main
+    image: {{ activate_validator.image }}
     environment:
       - NIMIQ_NODE_URL=http://node:8648
-      - PROMETHEUS_PORT=8000
-      - FAUCET_URL=https://faucet.pos.nimiq-testnet.com/tapit
-      - NIMIQ_NETWORK=testnet
+      - PROMETHEUS_PORT={{ activate_validator.port }}
+      - FAUCET_URL={{ activate_validator.faucet_url }}
+      - NIMIQ_NETWORK={{ network }}
     volumes:
-      - "/opt/nimiq/validator/secrets:/keys"
+      - "{{ activate_validator.secrets }}:/keys"
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:{{ activate_validator.port }}:{{ activate_validator.port }}"
     depends_on:
       - node
     restart: unless-stopped
@@ -86,20 +86,20 @@ services:
 {% endif %}
   watchdog:
     container_name: nimiq-watchdog
-    image: ghcr.io/maestroi/nimiq-watchdog:main
+    image: {{ watchdog.image }}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes/validator_data/_data/:/data/
     ports:
-      - 12345:12345
+      - {{ watchdog.port }}:{{ watchdog.port }}
     environment:
       - NIMIQ_HOST=http://node
-      - NIMIQ_PORT=8648
+      - NIMIQ_PORT={{ protocol_node.rpc_port }}
       - RETRY_LIMIT=60
       - RETRY_DELAY=15
       - RESTART_DELAY=600
       - DOCKER_CONTAINER_NAME=node
-      - PROMETHEUS_PORT=12345
+      - PROMETHEUS_PORT={{ watchdog.port }}
       - CLEAN_LEDGER=True
       - LEDGER_DIR=/data/
       - NODE_TYPE=full

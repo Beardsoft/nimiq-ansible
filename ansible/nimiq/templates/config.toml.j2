@@ -1,7 +1,7 @@
 [network]
 peer_key_file = "peer_key.dat"
 listen_addresses = [
-    "/ip4/0.0.0.0/tcp/8443/ws",
+    "/ip4/0.0.0.0/tcp/{{ protocol_node.P2P_port }}/ws",
 ]
 
 seed_nodes = [
@@ -12,7 +12,7 @@ seed_nodes = [
 desired_peer_count = 11
 
 [consensus]
-sync_mode = "{{ sync_mode }}"
+sync_mode = "{{ protocol_node.sync_mode }}"
 network = "{{ 'test-albatross' if network == 'testnet' else 'albatross' }}"
 
 [zkp]
@@ -20,12 +20,12 @@ prover_keys_path = "/home/nimiq/.zkp/"
 
 [rpc-server]
 bind = "0.0.0.0"
-port = 8648
+port = {{ protocol_node.rpc_port }}
 methods = []
 
 [metrics-server]
 bind = "0.0.0.0"
-port = 9200
+port = {{ protocol_node.metrics_port }}
 
 [database]
 

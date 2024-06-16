@@ -1,15 +1,14 @@
 ---
 - name: Ensure node working directory exists
   ansible.builtin.file:
-    path: /opt/nimiq/{{ node_type }}
+    path: {{ item }}
     state: directory
     owner: root
     group: root
     mode: '0755'
-
-- name: Set sync_mode based on node_type
-  ansible.builtin.set_fact:
-    sync_mode: "{{ 'history' if node_type == 'history_node' else 'full' }}"
+  loop:
+    - /opt/nimiq/{{ node_type }}
+    - {{ ledger_location }}
 
 - name: Validator | Configuration
   when: node_type == "validator"

@@ -2,11 +2,11 @@ version: '3.7'
 
 services:
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:{{ grafana.version }}
     container_name: grafana
     restart: unless-stopped
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:{{ grafana.port }}:{{ grafana.port }}"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=nimiq
       - GF_USERS_ALLOW_SIGN_UP=false
@@ -22,7 +22,7 @@ services:
       - app_net
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:{{ prometheus_version }}
     container_name: prometheus
     restart: unless-stopped
     volumes:
@@ -36,7 +36,7 @@ services:
       - app_net
 
   loki:
-    image: grafana/loki:latest
+    image: grafana/loki:{{ loki_version }}
     container_name: loki
     restart: unless-stopped
     ports:
@@ -48,7 +48,7 @@ services:
       - app_net
 
   promtail:
-    image: grafana/promtail:latest
+    image: grafana/promtail:{{ promtail_version }}
     container_name: promtail
     restart: unless-stopped
     volumes:
@@ -60,7 +60,7 @@ services:
       - app_net
 
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:{{ node_exporter_version}}
     container_name: node-exporter
     restart: unless-stopped
     command:

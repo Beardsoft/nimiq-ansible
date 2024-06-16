@@ -1,11 +1,11 @@
 server {
-    listen       80;
+    listen       {{ nginx.port }};
     server_name  node;
 
     {% if node_type != 'validator' %}
     {% raw %}
     location / {
-        proxy_pass         http://node:8648;
+        proxy_pass         http://node:{{ protocol_node.rpc_port }};
         proxy_redirect     off;
         proxy_set_header   Host $host;
         proxy_set_header   X-Real-IP $remote_addr;
@@ -21,7 +21,7 @@ server {
     {% endif %}
 
     location /grafana {
-        proxy_pass         http://grafana:3000;
+        proxy_pass         http://grafana:{{ grafana.port }};
         proxy_redirect     off;
         proxy_set_header   Host $host;
         proxy_set_header   X-Real-IP $remote_addr;
