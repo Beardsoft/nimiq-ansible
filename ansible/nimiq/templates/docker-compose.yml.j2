@@ -13,7 +13,6 @@ services:
       RPC_ENABLED: "true"
       NIMIQ_INSTANT_INBOUND: "true"
     volumes:
-    volumes:
       - type: bind
         source: /opt/nimiq/{{ node_type }}/client.toml
         target: /home/nimiq/.nimiq/client.toml
