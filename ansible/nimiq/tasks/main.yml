@@ -3,8 +3,8 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    owner: root
-    group: root
+    owner: 1001
+    group: 1001
     mode: '0755'
   loop:
     - "/opt/nimiq/{{ node_type }}"
