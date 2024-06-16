@@ -5,6 +5,7 @@ server {
     {% if node_type != 'validator' %}
     {% raw %}
     location / {
+        {% endraw %}
         proxy_pass         http://node:{{ protocol_node.rpc_port }};
         proxy_redirect     off;
         proxy_set_header   Host $host;
@@ -16,6 +17,7 @@ server {
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
+        {% raw %}
     }
     {% endraw %}
     {% endif %}
