@@ -6,7 +6,7 @@
     owner: root
     group: root
     mode: '0755'
-  loop:
+  with_items:
     - /opt/nimiq/{{ node_type }}
     - {{ ledger_location }}
 
