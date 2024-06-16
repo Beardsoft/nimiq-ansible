@@ -20,4 +20,4 @@
     - name: Import monitoring role if monitor is true
       ansible.builtin.import_role:
         name: monitoring
-      when: monitor
+      when: monitor_switch
