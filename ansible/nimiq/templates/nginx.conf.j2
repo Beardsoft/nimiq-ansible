@@ -2,7 +2,7 @@ server {
     listen       {{ nginx.port }};
     server_name  node;
 
-    {% if node_type != 'validator' %}
+    {% if node_type_switch != 'validator' %}
     {% raw %}
     location / {
         {% endraw %}

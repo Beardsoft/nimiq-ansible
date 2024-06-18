@@ -7,11 +7,11 @@
     group: 1001
     mode: '0755'
   loop:
-    - "/opt/nimiq/{{ node_type }}"
+    - "/opt/nimiq/{{ node_type_switch }}"
     - "{{ protocol_node.ledger_location }}"
 
 - name: Validator | Configuration
-  when: node_type == "validator"
+  when: node_type_switch == "validator"
   block:
     - name: Validator | Create secrets directory
       ansible.builtin.file:
@@ -57,12 +57,12 @@
     group: root
     mode: '0644'
   loop:
-    - { src: 'config.toml.j2', dest: '/opt/nimiq/{{ node_type }}/client.toml' }
-    - { src: 'nginx.conf.j2', dest: '/opt/nimiq/{{ node_type }}/nginx.conf' }
-    - { src: 'docker-compose.yml.j2', dest: '/opt/nimiq/{{ node_type }}/docker-compose.yml' }
+    - { src: 'config.toml.j2', dest: '/opt/nimiq/{{ node_type_switch }}/client.toml' }
+    - { src: 'nginx.conf.j2', dest: '/opt/nimiq/{{ node_type_switch }}/nginx.conf' }
+    - { src: 'docker-compose.yml.j2', dest: '/opt/nimiq/{{ node_type_switch }}/docker-compose.yml' }
 
 - name: Start Nimiq Docker container
   community.docker.docker_compose_v2:
-    project_src: /opt/nimiq/{{ node_type }}
+    project_src: /opt/nimiq/{{ node_type_switch }}
     state: present
     pull: always

@@ -26,6 +26,6 @@
 
 - name: Start Nimiq Docker container
   community.docker.docker_compose_v2:
-    project_src: /opt/nimiq/{{ node_type }}
+    project_src: /opt/nimiq/{{ node_type_switch }}
     state: present
     pull: always

@@ -1,7 +1,7 @@
 # vars.yml
 ## Typical variables that will change by user.
-network: "{{ network | default('testnet') }}"
-node_type: "{{ node_type | default('validator') }}"
+network_switch: "{{ network | default('testnet') }}"
+node_type_switch: "{{ node_type | default('validator') }}"
 monitor_switch: "{{ monitor | default(true) }}"
 
 ## Rest of all variables to easily keep track an change if needed.
@@ -13,11 +13,9 @@ node_exporter_version: latest
 
 ledger_base: /opt/nimiq
 
-reset_network: false
-
 protocol_node:
   image: ghcr.io/nimiq/core-rs-albatross:v0.22.1
-  sync_mode: "{{ 'history' if node_type == 'history_node' else 'full' }}"
+  sync_mode: "{{ 'history' if node_type_switch == 'history_node' else 'full' }}"
   ledger_location: "{{ ledger_base }}/ledger"
   rpc_port: 8648
   metrics_port: 9200

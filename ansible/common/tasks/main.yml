@@ -12,12 +12,12 @@
 - name: Validate network parameter
   ansible.builtin.fail:
     msg: Invalid network parameter. Please use 'testnet'.
-  when: network != 'testnet'
+  when: network_switch != 'testnet'
 
 - name: Validate node_type parameter
   ansible.builtin.fail:
     msg: Invalid node_type parameter. Please use 'full_node', 'history_node' or 'validator'.
-  when: node_type not in ['full_node', 'history_node', 'validator']
+  when: node_type_switch not in ['full_node', 'history_node', 'validator']
 
 - name: Install required packages
   ansible.builtin.apt:

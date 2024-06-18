@@ -14,7 +14,7 @@ services:
       NIMIQ_INSTANT_INBOUND: "true"
     volumes:
       - type: bind
-        source: /opt/nimiq/{{ node_type }}/client.toml
+        source: /opt/nimiq/{{ node_type_switch }}/client.toml
         target: /home/nimiq/.nimiq/client.toml
         read_only: false
       - type: bind
@@ -64,7 +64,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
-{% if node_type == 'validator' %}
+{% if node_type_switch == 'validator' %}
   activate_validator:
     container_name: activate_validator
     image: {{ activate_validator.image }}
@@ -72,7 +72,7 @@ services:
       - NIMIQ_NODE_URL=http://node:8648
       - PROMETHEUS_PORT={{ activate_validator.port }}
       - FAUCET_URL={{ activate_validator.faucet_url }}
-      - NIMIQ_NETWORK={{ network }}
+      - NIMIQ_NETWORK={{ network_switch }}
     volumes:
       - "{{ activate_validator.secrets }}:/keys"
     ports:

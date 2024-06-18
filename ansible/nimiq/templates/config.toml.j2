@@ -13,7 +13,7 @@ desired_peer_count = 11
 
 [consensus]
 sync_mode = "{{ protocol_node.sync_mode }}"
-network = "{{ 'test-albatross' if network == 'testnet' else 'albatross' }}"
+network = "{{ 'test-albatross' if network_switch == 'testnet' else 'albatross' }}"
 
 [zkp]
 prover_keys_path = "/home/nimiq/.zkp/"
@@ -37,11 +37,11 @@ timestamps = true
 libp2p_swarm = "info"
 
 [validator]
-validator_address = "{% if node_type == 'validator' %}{{ validator_address }}{% else %}NQ07 0000 0000 0000 0000 0000 0000 0000 0000{% endif %}"
+validator_address = "{% if node_type_switch == 'validator' %}{{ validator_address }}{% else %}NQ07 0000 0000 0000 0000 0000 0000 0000 0000{% endif %}"
 voting_key_file = "voting_key.dat"
 fee_key_file = "fee_key.dat"
 signing_key_file = "signing_key.dat"
-{% if node_type == 'validator' %}
+{% if node_type_switch == 'validator' %}
 voting_key = "{{ voting_key }}"
 signing_key = "{{ signing_key }}"
 fee_key = "{{ fee_key }}"
