@@ -17,7 +17,7 @@
 - name: Create ledger location for reset
   ansible.builtin.file:
     path: "{{ item }}"
-    state: absent
+    state: directory
     owner: 1001
     group: 1001
     mode: '0755'

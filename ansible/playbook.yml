@@ -17,6 +17,7 @@
     - name: Import nimiq role
       ansible.builtin.import_role:
         name: nimiq
+      tags: ['protocol']
 
     - name: Import monitoring role if monitor is true
       ansible.builtin.import_role:
