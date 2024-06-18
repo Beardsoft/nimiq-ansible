@@ -1,0 +1,31 @@
+---
+- name: Create a data container
+  community.docker.docker_container:
+    name: node
+    state: stopped
+
+- name: Remove ledger data
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+    owner: 1001
+    group: 1001
+    mode: '0755'
+  loop:
+    - "{{ protocol_node.ledger_location }}"
+
+- name: Create ledger location for reset
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+    owner: 1001
+    group: 1001
+    mode: '0755'
+  loop:
+    - "{{ protocol_node.ledger_location }}"
+
+- name: Start Nimiq Docker container
+  community.docker.docker_compose_v2:
+    project_src: /opt/nimiq/{{ node_type }}
+    state: present
+    pull: always
