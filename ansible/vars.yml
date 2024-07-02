@@ -14,7 +14,7 @@ node_exporter_version: latest
 ledger_base: /opt/nimiq
 
 protocol_node:
-  image: ghcr.io/nimiq/core-rs-albatross:v0.22.2
+  image: ghcr.io/nimiq/core-rs-albatross:v0.22.3
   sync_mode: "{{ 'history' if node_type_switch == 'history_node' else 'full' }}"
   ledger_location: "{{ ledger_base }}/ledger"
   rpc_port: 8648
