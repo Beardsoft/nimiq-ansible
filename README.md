@@ -30,7 +30,7 @@ To quickly set up or update a Nimiq node using this repository, you can use the 
 Run the following command in your terminal:
 
 ```sh
-curl -s https://raw.githubusercontent.com/maestroi/nimiq-ansible/master/setup.sh | bash -s <network> <node_type>
+curl -s https://raw.githubusercontent.com/maestroi/nimiq-ansible/v0.1.0/setup.sh | bash -s <network> <node_type>
 ```
 
 Replace `<network>` and `<node_type>` with the appropriate values:
@@ -43,7 +43,7 @@ Replace `<network>` and `<node_type>` with the appropriate values:
 To set up or update a validator node on the testnet:
 
 ```sh
-curl -s https://raw.githubusercontent.com/maestroi/nimiq-ansible/master/setup.sh | bash -s testnet validator
+curl -s https://raw.githubusercontent.com/maestroi/nimiq-ansible/v0.1.0/setup.sh | bash -s testnet validator
 ```
 
 ### Setup Script
