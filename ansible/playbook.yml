@@ -1,7 +1,6 @@
 ---
 - name: Nimiq V2 Installer with monitoring
   hosts: localhost
-  become: true
   vars_files:
     - vars.yml
   tasks:
