@@ -15,9 +15,6 @@ desired_peer_count = 11
 sync_mode = "{{ protocol_node.sync_mode }}"
 network = "{{ 'test-albatross' if network_switch == 'testnet' else 'albatross' }}"
 
-[zkp]
-prover_keys_path = "/home/nimiq/.zkp/"
-
 [rpc-server]
 bind = "0.0.0.0"
 port = {{ protocol_node.rpc_port }}
