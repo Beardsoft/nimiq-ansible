@@ -5,7 +5,7 @@ node_type_switch: "{{ node_type | default('validator') }}"
 monitor_switch: "{{ monitor | default(true) }}"
 
 ## Rest of all variables to easily keep track an change if needed.
-gen_keys_docker_image: ghcr.io/maestroi/nimiq-key-generator:main
+gen_keys_docker_image: ghcr.io/beardsoft/nimiq-key-generator:main
 promtail_version: latest
 prometheus_version: latest
 loki_version: latest
@@ -14,7 +14,7 @@ node_exporter_version: latest
 ledger_base: /opt/nimiq
 
 protocol_node:
-  image: ghcr.io/nimiq/core-rs-albatross:v0.23.0
+  image: ghcr.io/nimiq/core-rs-albatross:v0.24.0
   sync_mode: "{{ 'history' if node_type_switch == 'history_node' else 'full' }}"
   ledger_location: "{{ ledger_base }}/ledger"
   rpc_port: 8648
@@ -22,11 +22,11 @@ protocol_node:
   P2P_port: 8443
 
 watchdog:
-  image: ghcr.io/maestroi/nimiq-watchdog:main
+  image: ghcr.io/beardsoft/nimiq-watchdog:main
   port: 12345
 
 activate_validator:
-  image: ghcr.io/maestroi/nimiq-validator-activator-go:main
+  image: ghcr.io/beardsoft/nimiq-validator-activator-go:main
   port: 8000
   faucet_url: https://faucet.pos.nimiq-testnet.com/tapit
   secrets: /opt/nimiq/validator/secrets
