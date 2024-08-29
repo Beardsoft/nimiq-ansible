@@ -71,7 +71,7 @@ services:
       - app_net
 
   docker-monitor:
-    image: ghcr.io/maestroi/docker-prom-exporter:master
+    image: ghcr.io/beardsoft/docker-prom-exporter:master
     container_name: docker-monitor
     ports:
       - "127.0.0.1:8080:8080"
