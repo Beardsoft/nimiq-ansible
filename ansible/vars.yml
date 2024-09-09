@@ -3,6 +3,7 @@
 network_switch: "{{ network | default('testnet') }}"
 node_type_switch: "{{ node_type | default('validator') }}"
 monitor_switch: "{{ monitor | default(true) }}"
+data_path_switch: "{{ data_path | default('/opt') }}"
 
 ## Rest of all variables to easily keep track an change if needed.
 gen_keys_docker_image: ghcr.io/beardsoft/nimiq-key-generator:main
@@ -11,7 +12,7 @@ prometheus_version: latest
 loki_version: latest
 node_exporter_version: latest
 
-ledger_base: /opt/nimiq
+ledger_base: "{{ data_path_switch }}/nimiq"
 
 protocol_node:
   image: ghcr.io/nimiq/core-rs-albatross:v0.24.0
