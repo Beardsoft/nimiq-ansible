@@ -99,7 +99,7 @@ services:
     environment:
       - NIMIQ_HOST=http://node
       - NIMIQ_PORT={{ protocol_node.rpc_port }}
-      - RETRY_LIMIT=60
+      - RETRY_LIMIT=180
       - RETRY_DELAY=15
       - RESTART_DELAY=600
       - DOCKER_CONTAINER_NAME=node
