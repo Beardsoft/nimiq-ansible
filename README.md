@@ -18,7 +18,7 @@ Mainnet is not yet available!
 ## Recommended
 - CPU: 2 core
 - Memory: 4 GB
-- Disk: 80 GB SSD
+- Disk: 200+ GB SSD
 - OS: Ubuntu 24.04+
 
 ## Setup or Update
@@ -27,33 +27,7 @@ To quickly set up or update a Nimiq node using this repository, you can use the 
 
 ### Usage
 
-Run the following command in your terminal:
-
-```sh
-curl -s https://raw.githubusercontent.com/maestroi/nimiq-ansible/master/setup.sh | bash -s <network> <node_type>
-```
-
-Replace `<network>` and `<node_type>` with the appropriate values:
-
-- `<network>`: The network to connect to (`testnet`, `mainnet`, etc.).
-- `<node_type>`: The type of node to set up (`validator`, `full_node`, `history_node`).
-
-### Example
-
-To set up or update a validator node on the testnet:
-
-```sh
-curl -s https://raw.githubusercontent.com/maestroi/nimiq-ansible/master/setup.sh | bash -s testnet validator
-```
-
-### Setup Script
-
-The setup script (`setup.sh`) performs the following tasks:
-
-1. Installs necessary dependencies.
-2. Adds the Ansible repository and installs Ansible if not already installed.
-3. Clones or updates the Nimiq Ansible repository.
-4. Runs the Ansible playbook with the specified network and node type.
+This is ment to be used together with the CLI https://github.com/maestroi/node-manager-cli else you can just create a inventory and deploy like any ansible.
 
 ### Playbooks
 
