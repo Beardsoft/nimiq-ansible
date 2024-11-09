@@ -11,8 +11,8 @@
 
 - name: Validate network parameter
   ansible.builtin.fail:
-    msg: Invalid network parameter. Please use 'testnet'.
-  when: network_switch != 'testnet'
+    msg: Invalid network parameter. Please use 'testnet' or 'mainnet'.
+  when: network_switch != 'testnet' and network_switch != 'mainnet'
 
 - name: Validate node_type parameter
   ansible.builtin.fail:

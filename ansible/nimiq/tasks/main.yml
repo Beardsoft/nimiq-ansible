@@ -49,6 +49,14 @@
         signing_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/signing_key.txt') | regex_search('Private Key:\\s*(.*)', '\\1') | join('') }}"
         voting_key: "{{ lookup('file', '/opt/nimiq/validator/secrets/vote_key.txt') | regex_search('Secret Key:\\s*(.*)', '\\1') | join('') }}"
 
+- name: Validator | Set seed nodes based on network type
+  ansible.builtin.set_fact:
+    nimiq_seed_nodes: "{{ seed_testnet if network_switch == 'testnet' else seed_mainnet }}"
+
+- name: Source | Set source network type
+  ansible.builtin.set_fact:
+    source_type: "{{ 'testalbatross' if network_switch == 'testnet' else 'mainalbatross' }}"
+
 - name: Template configuration files
   ansible.builtin.template:
     src: "{{ item.src }}"

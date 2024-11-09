@@ -13,7 +13,7 @@ desired_peer_count = 11
 
 [consensus]
 sync_mode = "{{ protocol_node.sync_mode }}"
-network = "{{ 'test-albatross' if network_switch == 'testnet' else 'albatross' }}"
+network = "{{ 'test-albatross' if network_switch == 'testnet' else 'main-albatross' }}"
 
 [rpc-server]
 bind = "0.0.0.0"

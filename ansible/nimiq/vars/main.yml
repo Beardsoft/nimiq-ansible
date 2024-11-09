@@ -1,5 +1,12 @@
 ---
 gen_keys_docker_image: ghcr.io/beardsoft/nimiq-key-generator:main
 version_switch: "{{ version | default('master') }}"
-seed_nodes:
+# Nimiq network
+seed_testnet:
   - /dns4/seed1.pos.nimiq-testnet.com/tcp/8443/wss
+
+seed_mainnet:
+  - /dns4/seed-1.pos.nimiq.com/tcp/8443/wss
+  - /dns4/seed-2.pos.nimiq.com/tcp/8443/wss
+  - /dns4/seed-3.pos.nimiq.com/tcp/8443/wss
+  - /dns4/seed-4.pos.nimiq.com/tcp/8443/wss

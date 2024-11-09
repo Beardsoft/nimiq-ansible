@@ -17,7 +17,7 @@ services:
         read_only: false
       - type: bind
         source: "{{ protocol_node.ledger_location }}"
-        target: /home/nimiq/.nimiq/testalbatross-{{ protocol_node.sync_mode }}-consensus
+        target: /home/nimiq/.nimiq/{{ source_type }}-{{ protocol_node.sync_mode }}-consensus
         read_only: false
     networks:
       - app_net
@@ -93,7 +93,7 @@ services:
     image: {{ watchdog.image }}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes/validator_data/_data/:/data/
+      - {{ protocol_node.ledger_location }}:/data/
     ports:
       - {{ watchdog.port }}:{{ watchdog.port }}
     environment:
@@ -104,7 +104,7 @@ services:
       - RESTART_DELAY=600
       - DOCKER_CONTAINER_NAME=node
       - PROMETHEUS_PORT={{ watchdog.port }}
-      - CLEAN_LEDGER=True
+      - CLEAN_LEDGER=False
       - LEDGER_DIR=/data/
       - NODE_TYPE=full
     restart: unless-stopped
